@@ -1,15 +1,13 @@
 s = ""
 
-with open("log.txt","r") as log:
-    s = log.read()
-ss = s.split()
 l = []
-for s in ss:
-    try:
-        n = int(s)
-        l.append(n)
-    except:
-        pass
+with open("log.txt","r") as log:
+    for line in log.readlines():
+        try:
+            n = int(line)
+            l.append(n)
+        except:
+            continue
 
 for i in range(1,51):
     if not i in l:

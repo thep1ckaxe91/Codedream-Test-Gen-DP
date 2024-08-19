@@ -14,8 +14,9 @@ os.makedirs(test_dir,exist_ok=True)
 
 inp_dir = test_dir+f"\\test.inp"
 out_dir = test_dir+f"\\test.out"
-#FIXME!!!: test.out is empty
-with open(inp_dir,"w") as inp_file:
+#FIXME!!!: test.out and test.inp is empty
+lock = threading.Lock()
+with open(inp_dir,"w") as inp_file, open("log.txt","a") as log:
     #gen test here
     if test_num <= 5: #gen readable test
         n,k = random.randint(5,10), random.randint(0,10)
@@ -57,7 +58,8 @@ with open(inp_dir,"w") as inp_file:
         n,k = 1,0
         d = {}
         chance = random.randint(1,5)
-
+        # with lock: # stuck doesnt happen here
+        #     print(f"{test_num}case:{chance}",file=log)
         def possible(pos):
             return d.get(pos-1) == None and d.get(pos+1) == None and d.get(pos) == None
 
@@ -108,10 +110,9 @@ with open(inp_dir,"w") as inp_file:
         print(n,k,file=inp_file)
         print(("{} "*(len(d))).format(*[k for k in d.keys()]), file=inp_file)
     #stop gen test here
-with open("log.txt","a") as log:
-    lock = threading.Lock()
+
     with lock:
-        print(f"generate {test_num} doesnt stuck",file=log)
+        print(f"{test_num}",file=log)
 with open(inp_dir,"r") as inp_file, open(out_dir, "w") as output:  
     process = subprocess.Popen(f"{path}sol.exe", stdin=inp_file, stdout=output)
     process.communicate()

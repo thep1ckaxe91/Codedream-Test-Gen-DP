@@ -13,6 +13,9 @@ for root, dirs, files in os.walk("./"):
             num = int(dir.removeprefix("TEST"))
             if num > num_of_test:
                 shutil.rmtree(root+"/"+dir)
+#clear log
+with open("log.txt","w") as log:
+    pass
 
 def gen_test(dir):
     os.system(f"python {path}{dir}\\manager.py {gen} {num_of_test}")
