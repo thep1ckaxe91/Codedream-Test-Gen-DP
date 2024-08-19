@@ -14,12 +14,8 @@ num_of_test = int(sys.argv[2])
 
 def gen_test(i):
     os.system(f"python {path}gen.py {i} {gen}")
-threads = []
+threads : list[Thread] = []
 #gen small test case
 for i in range(1,num_of_test+1):
-    threads.append(Thread(target=gen_test,args=[i]))
-for t in threads:
-    t.start()
-for t in threads:
-    t.join()
+    gen_test(i)
     

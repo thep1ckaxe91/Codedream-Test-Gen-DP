@@ -4,11 +4,15 @@ path = os.path.dirname(os.path.abspath(__file__))+'\\'
 
 gen = 1
 
-num_of_test = 100
+num_of_test = 50
 
 def gen_test(dir):
     os.system(f"python {path}{dir}\\manager.py {gen} {num_of_test}")
 
+def gen_problem(num : int):
+    if os.path.exists(f"{path}{num}"):
+        gen_test(str(num))
+        
 def gen_all():
     for root,dirs,files in os.walk("./"):
         if root == "./":
@@ -20,9 +24,6 @@ def gen_all():
                 t.start()
             
             for t in threads:
-                t.join()
-def gen_problem(num : int):
-    if os.path.exists(f"{path}{num}"):
-        gen_test(str(num))
+                t.join(20)
 
 gen_problem(213)
