@@ -43,18 +43,65 @@ with open(inp_dir,"w") as inp_file:
         cases:
             no broken stair at all
 
-            2 broken next to each other
+            2 broken next to each other = 0
 
-            last stair is broke
+            last stair is broke = 0
 
+            this situation :  ..xoxoox..
+
+            normal possible case
             
         '''
-
-
         n,k = 0,0
         d = {}
-        chance = random.random()*100
-        if chance < 20: 
+        chance = random.randint(1,5)
+
+        def possible(pos):
+            return d.get(pos-1) == None and d.get(pos+1) == None and d.get(pos) == None
+
+        match chance:
+            case 1:
+                n = 100000
+            case 2:
+                n,k = 100000, 10
+                while len(d) < k:
+                    num = random.randint(2,n-1)
+                    if possible(num) and len(d) < k-1:
+                        d[num] = 1
+                    elif len(d) == k-1:
+                        for k in d.keys():
+                            if d.get(k+1) == None:
+                                d[k+1] = 1
+                                break
+
+            case 3:
+                n = 100000
+                k = 10
+                while len(d) < k-1:
+                    num = random.randint(2,n-2)
+                    if possible(num):
+                        d[num] = 1
+                d[n]=1
+            case 4:
+                n = 100000
+                k = 10
+                pos = random.randint(2,n-10)
+                d[pos] = 1
+                d[pos+2] = 1
+                d[pos+5] = 1
+
+                while len(d) < k-3:
+                    num = random.randint(2,n-2)
+                    if possible(num) and (num < pos or num > pos + 5):
+                        d[num] = 1
+            case _:
+                n = 100000
+                k = 10
+
+                while len(d) < k:
+                    num = random.randint(2,n-1)
+                    if possible(num):
+                        d[num] = 1        
 
         print(n,k,file=inp_file)
         print(("{} "*(len(d))).format(*[k for k in d.keys()]), file=inp_file)
@@ -62,5 +109,5 @@ with open(inp_dir,"w") as inp_file:
 
 with open(inp_dir,"r") as inp_file, open(out_dir, "w") as output:  
     process = subprocess.Popen(f"{path}sol.exe", stdin=inp_file, stdout=output)
-    process.communicate()
+    process.communicate(timeout=1)
 
