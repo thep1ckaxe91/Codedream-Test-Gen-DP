@@ -13,7 +13,7 @@ os.makedirs(test_dir,exist_ok=True)
 
 inp_dir = test_dir+f"\\test.inp"
 out_dir = test_dir+f"\\test.out"
-
+#FIXME!!!: test.out is empty
 with open(inp_dir,"w") as inp_file:
     #gen test here
     if test_num <= 5: #gen readable test
@@ -53,7 +53,7 @@ with open(inp_dir,"w") as inp_file:
             normal possible case
             
         '''
-        n,k = 0,0
+        n,k = 1,0
         d = {}
         chance = random.randint(1,5)
 
@@ -107,8 +107,8 @@ with open(inp_dir,"w") as inp_file:
         print(n,k,file=inp_file)
         print(("{} "*(len(d))).format(*[k for k in d.keys()]), file=inp_file)
     #stop gen test here
-
+print(f"generate {test_num} doesnt stuck")
 with open(inp_dir,"r") as inp_file, open(out_dir, "w") as output:  
     process = subprocess.Popen(f"{path}sol.exe", stdin=inp_file, stdout=output)
-    process.communicate(timeout=1)
+    process.communicate()
 
