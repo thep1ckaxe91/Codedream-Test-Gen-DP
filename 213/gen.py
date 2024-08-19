@@ -26,6 +26,7 @@ with open(inp_dir,"w") as inp_file:
                 num = random.randint(2,n)
                 if d.get(num) == None:
                     chance = random.random()*100
+                    
                     if chance < 95:
                         if d.get(num-1)!=None or d.get(num+1)!=None or num == n:
                             continue
