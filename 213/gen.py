@@ -2,6 +2,7 @@ import subprocess
 import sys
 import os
 import random
+import threading
 path = os.path.dirname(os.path.abspath(__file__))+'\\'
 
 if(sys.argv[2] == "nogen"):
@@ -107,7 +108,10 @@ with open(inp_dir,"w") as inp_file:
         print(n,k,file=inp_file)
         print(("{} "*(len(d))).format(*[k for k in d.keys()]), file=inp_file)
     #stop gen test here
-print(f"generate {test_num} doesnt stuck")
+with open("log.txt","a") as log:
+    lock = threading.Lock()
+    with lock:
+        print(f"generate {test_num} doesnt stuck",file=log)
 with open(inp_dir,"r") as inp_file, open(out_dir, "w") as output:  
     process = subprocess.Popen(f"{path}sol.exe", stdin=inp_file, stdout=output)
     process.communicate()
