@@ -14,7 +14,6 @@ os.makedirs(test_dir,exist_ok=True)
 
 inp_dir = test_dir+f"\\test.inp"
 out_dir = test_dir+f"\\test.out"
-#FIXME!!!: test.out and test.inp is empty
 lock = threading.Lock()
 with open(inp_dir,"w") as inp_file, open("log.txt","a") as log:
     #gen test here
@@ -63,20 +62,18 @@ with open(inp_dir,"w") as inp_file, open("log.txt","a") as log:
         def possible(pos):
             return d.get(pos-1) == None and d.get(pos+1) == None and d.get(pos) == None
 
+        # print(f"get the chance: {chance} for test {test_num}")
+
         match chance:
             case 1:
                 n = 100000
             case 2:
                 n,k = 100000, 10
-                while len(d) < k:
-                    num = random.randint(2,n-1)
-                    if possible(num) and len(d) < k-1:
+                while len(d) < k-1:
+                    num = random.randint(2,n-2)
+                    if possible(num):
                         d[num] = 1
-                    elif len(d) == k-1:
-                        for k in d.keys():
-                            if d.get(k+1) == None:
-                                d[k+1] = 1
-                                break
+                d[list(d.keys())[0]+1] = 1
 
             case 3:
                 n = 100000
@@ -111,9 +108,12 @@ with open(inp_dir,"w") as inp_file, open("log.txt","a") as log:
         print(("{} "*(len(d))).format(*[k for k in d.keys()]), file=inp_file)
     #stop gen test here
 
-    with lock:
-        print(f"{test_num}",file=log)
-with open(inp_dir,"r") as inp_file, open(out_dir, "w") as output:  
+    # print(f"generate test {test_num} done")
+
+    # with lock:
+    #     print(f"{test_num}",file=log)
+with open(inp_dir,"r") as inp_file, open(out_dir, "w") as output:
     process = subprocess.Popen(f"{path}sol.exe", stdin=inp_file, stdout=output)
     process.communicate()
+    # print(f"test {test_num} executed")
 

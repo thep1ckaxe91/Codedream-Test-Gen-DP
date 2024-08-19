@@ -17,10 +17,10 @@ def gen_test(i):
 threads : list[Thread] = []
 #gen small test case
 for i in range(1,num_of_test+1):
-    gen_test(i)
-#     threads.append(Thread(target=gen_test,args=[i]))
-# for t in threads:
-#     t.start()
-# for t in threads:
-#     t.join()
+    # gen_test(i)
+    threads.append(Thread(target=gen_test,args=[i]))
+for t in threads:
+    t.start()
+for t in threads:
+    t.join()
     
