@@ -56,7 +56,9 @@ with open(inp_dir,"w") as inp_file, open("log.txt","a") as log:
         '''
         n,k = 1,0
         d = {}
-        chance = random.randint(1,5)
+        chance = random.randint(2,5)
+        if test_num == 20:
+            chance = 1
         # with lock: # stuck doesnt happen here
         #     print(f"{test_num}case:{chance}",file=log)
         def possible(pos):

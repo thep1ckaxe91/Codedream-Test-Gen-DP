@@ -17,7 +17,6 @@ out_dir = test_dir + f"\\test.out"
 
 with open(inp_dir, "w") as inp_file:
     # gen test here
-
     if test_num <= 5:
         n = random.randint(10, 15)
         val_range = (0, 50)
@@ -32,6 +31,10 @@ with open(inp_dir, "w") as inp_file:
         
     else:
         n = random.randint(1000, 100000)
+        if test_num == 50:
+            n = 100000
+        elif test_num == 20:
+            n = 1
         val_range = (0, 1000)
         print(n, file=inp_file)
         for i in range(n):
@@ -46,3 +49,4 @@ with open(inp_dir, "w") as inp_file:
 with open(inp_dir, "r") as inp_file, open(out_dir, "w") as output:
     process = subprocess.Popen(f"{path}sol.exe", stdin=inp_file, stdout=output)
     process.communicate()
+    
