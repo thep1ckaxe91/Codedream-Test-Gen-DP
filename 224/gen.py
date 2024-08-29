@@ -16,9 +16,15 @@ out_dir = test_dir+f"\\test.out"
 
 with open(inp_dir,"w") as inp_file:
     if test_num <= 5:
-        pass
+        n,k = random.randint(5,10),random.randint(4,5)
+        print(n,k,file=inp_file)
+        for i in range(n):
+            print(random.randint(1,5),end=" ",file=inp_file)
     else:
-        pass
+        n,k = 1000,random.randint(1,1000)
+        print(n,k,file=inp_file)
+        for i in range(n):
+            print(random.randint(1,100000),end=" ",file=inp_file)
 
 with open(inp_dir,"r") as inp_file, open(out_dir, "w") as output:  
     process = subprocess.Popen(f"{path}sol.exe", stdin=inp_file, stdout=output)
