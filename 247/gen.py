@@ -39,7 +39,7 @@ with open(inp_dir, "w") as inp_file:
             print(x, file=inp_file, end=" ")
 
     else:
-        T = 0
+        t = 0
         n, m = 0, 0
         small = []
         big = []
@@ -91,9 +91,15 @@ with open(inp_dir, "w") as inp_file:
                     big.append(random.randint(50,300))
             n = len(small)
             m = len(big)
-
-
-        print(T, file=inp_file)
+        else:
+            t = 1000
+            n = 1000
+            m = 1000
+            for _ in range(1000):
+                small.append(random.randint(1,1000))
+                big.append(random.randint(1,1000))
+                
+        print(t, file=inp_file)
         print(n, file=inp_file)
         small.sort()
         big.sort()
