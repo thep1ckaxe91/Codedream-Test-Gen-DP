@@ -21,5 +21,5 @@ for i in range(1,num_of_test+1):
 for t in threads:
     t.start()
 for t in threads:
-    t.join(5)
+    t.join()
     
