@@ -37,4 +37,4 @@ def gen_all():
             for t in threads:
                 t.join()
 
-gen_problem(247)
+gen_problem(252)
