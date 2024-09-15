@@ -110,6 +110,9 @@ with open(inp_dir, "w") as inp_file:
         for x in big:
             print(x, file=inp_file, end=" ")
 
-with open(inp_dir, "r") as inp_file, open(out_dir, "w") as output:
-    process = subprocess.Popen(f"{path}sol.exe", stdin=inp_file, stdout=output)
-    process.communicate()
+import threading
+lock = threading.Lock()
+with lock:
+    with open(inp_dir, "r") as inp_file, open(out_dir, "w") as output:
+        process = subprocess.Popen(f"{path}sol.exe", stdin=inp_file, stdout=output)
+        process.communicate()

@@ -14,7 +14,6 @@ os.makedirs(test_dir,exist_ok=True)
 
 inp_dir = test_dir+f"\\test.inp"
 out_dir = test_dir+f"\\test.out"
-lock = threading.Lock()
 with open(inp_dir,"w") as inp_file, open("log.txt","a") as log:
     #gen test here
     if test_num <= 5: #gen readable test
@@ -68,9 +67,9 @@ with open(inp_dir,"w") as inp_file, open("log.txt","a") as log:
 
         match chance:
             case 1:
-                n = 100000
+                n = 10000
             case 2:
-                n,k = 100000, 10
+                n,k = 10000, 10
                 while len(d) < k-1:
                     num = random.randint(2,n-2)
                     if possible(num):
@@ -78,7 +77,7 @@ with open(inp_dir,"w") as inp_file, open("log.txt","a") as log:
                 d[list(d.keys())[0]+1] = 1
 
             case 3:
-                n = 100000
+                n = 10000
                 k = 10
                 while len(d) < k-1:
                     num = random.randint(2,n-2)
@@ -86,7 +85,7 @@ with open(inp_dir,"w") as inp_file, open("log.txt","a") as log:
                         d[num] = 1
                 d[n]=1
             case 4:
-                n = 100000
+                n = 10000
                 k = 10
                 pos = random.randint(2,n-10)
                 d[pos] = 1
@@ -98,7 +97,7 @@ with open(inp_dir,"w") as inp_file, open("log.txt","a") as log:
                     if possible(num) and (num < pos or num > pos + 5):
                         d[num] = 1
             case _:
-                n = 100000
+                n = 10000
                 k = 10
 
                 while len(d) < k:
@@ -114,8 +113,9 @@ with open(inp_dir,"w") as inp_file, open("log.txt","a") as log:
 
     # with lock:
     #     print(f"{test_num}",file=log)
-with open(inp_dir,"r") as inp_file, open(out_dir, "w") as output:
-    process = subprocess.Popen(f"{path}sol.exe", stdin=inp_file, stdout=output)
-    process.communicate()
-    # print(f"test {test_num} executed")
-
+    
+lock = threading.Lock()
+with lock:
+    with open(inp_dir,"r") as inp_file, open(out_dir, "w") as output:
+        process = subprocess.Popen(f"{path}sol.exe", stdin=inp_file, stdout=output)
+        process.communicate()

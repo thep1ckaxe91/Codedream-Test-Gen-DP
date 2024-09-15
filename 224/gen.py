@@ -26,7 +26,9 @@ with open(inp_dir,"w") as inp_file:
         for i in range(n):
             print(random.randint(1,100000),end=" ",file=inp_file)
 
-with open(inp_dir,"r") as inp_file, open(out_dir, "w") as output:  
-    process = subprocess.Popen(f"{path}sol.exe", stdin=inp_file, stdout=output)
-    process.communicate()
-
+import threading
+lock = threading.Lock()
+with lock:
+    with open(inp_dir, "r") as inp_file, open(out_dir, "w") as output:
+        process = subprocess.Popen(f"{path}sol.exe", stdin=inp_file, stdout=output)
+        process.communicate()
