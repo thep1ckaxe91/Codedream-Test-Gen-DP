@@ -37,4 +37,10 @@ def gen_all():
             for t in threads:
                 t.join()
 # gen_all()
-gen_problem(216)
+while True:
+    
+    gen_problem(216)
+    with open("216\\TEST\\TEST010\\test.out","r") as f:
+        l = f.read().strip()
+        if not l:
+            break

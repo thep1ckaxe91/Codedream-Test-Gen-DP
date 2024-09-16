@@ -35,6 +35,8 @@ with open(inp_dir, "w") as inp_file:
             n = 100000
         elif test_num == 20:
             n = 1
+        elif test_num == 10:
+            n = 10000
         val_range = (0, 1000)
         print(n, file=inp_file)
         for i in range(n):
